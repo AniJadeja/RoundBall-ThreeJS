@@ -2,7 +2,8 @@
 /* https://www.youtube.com/watch?v=_OwJV2xL8M8 */
 
 import * as THREE from "three";
-
+import './index.css';
+import { render } from "react-dom";
 // Scene
 const scene = new THREE.Scene();
 
@@ -30,14 +31,24 @@ const sphere = new THREE.Mesh(geometry, material);
 // Add the sphere to the scene
 scene.add(sphere);
 
+// Sizes
+const sizes = {
+  width: window.innerWidth,
+  height: window.innerHeight
+};
+
 
 // Camera
 const camera = new THREE.PerspectiveCamera(
   45, // Field of View : how much we can see in the scene
-  800/ 600, // Aspect Ratio : width / height
+  sizes.width / sizes.height, // Aspect Ratio : width / height
+  5, // Near Clipping Plane : how close the camera can see the object
+  100 // Far Clipping Plane : how far the camera can see the object
 ) 
-camera.position.z = 10; // move the camera back to see the sphere
+camera.position.z = 20; // move the camera back to see the sphere
 scene.add(camera);
+
+
 
 // Light
 const pointLight = new THREE.PointLight(
@@ -59,5 +70,30 @@ const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
 });
 
-renderer.setSize(800, 600);
+renderer.setSize(sizes.width, sizes.height);
 renderer.render(scene, camera);
+
+
+const resizeScene = () => {
+  // Update sizes
+  sizes.width = window.innerWidth;
+  sizes.height = window.innerHeight;
+
+  // Update camera
+  camera.aspect = sizes.width / sizes.height;
+  camera.updateProjectionMatrix();
+
+  // Update renderer
+  renderer.setSize(sizes.width, sizes.height);
+}
+
+// Resize the window
+window.addEventListener("resize", resizeScene);
+
+
+const loop = () => {
+  renderer.render(scene, camera);
+  window.requestAnimationFrame(loop);
+}
+
+loop();
