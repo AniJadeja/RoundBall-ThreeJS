@@ -3,7 +3,8 @@
 
 import * as THREE from "three";
 import './index.css';
-import { render } from "react-dom";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+
 // Scene
 const scene = new THREE.Scene();
 
@@ -49,7 +50,6 @@ camera.position.z = 20; // move the camera back to see the sphere
 scene.add(camera);
 
 
-
 // Light
 const pointLight = new THREE.PointLight(
   0xffffff,  // color
@@ -73,6 +73,17 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height);
 renderer.render(scene, camera);
 
+// Orbit Controls
+const controls = new OrbitControls(camera, canvas);
+/*
+* enableDamping : when we move the camera, it will have a smooth transition
+*/
+controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+controls.enablePan = false;
+controls.enableZoom = false;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.5;
+
 
 const resizeScene = () => {
   // Update sizes
@@ -92,6 +103,7 @@ window.addEventListener("resize", resizeScene);
 
 
 const loop = () => {
+  controls.update(); // will update the controls
   renderer.render(scene, camera);
   window.requestAnimationFrame(loop);
 }
