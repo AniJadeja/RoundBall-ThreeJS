@@ -1,10 +1,4 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+/* This project is created by following the Three.JS crash course by Developedbyed */
+/* https://www.youtube.com/watch?v=_OwJV2xL8M8 */
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+import * as THREE from 'three';
