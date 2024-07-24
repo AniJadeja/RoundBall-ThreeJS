@@ -30,6 +30,7 @@ const material = new THREE.MeshStandardMaterial({
 const sphere = new THREE.Mesh(geometry, material);
 
 // Add the sphere to the scene
+sphere.position.y = -1;
 scene.add(sphere);
 
 // Sizes
@@ -52,16 +53,34 @@ scene.add(camera);
 
 // Light
 const pointLight = new THREE.PointLight(
-  0xffffff,  // color
-  100,       // intensity
-  100     // distance
+  0xbbbbff,  // color
+  300,       // intensity
+  50     // distance
 ); 
 pointLight.position.set(
-  0,  // x
+  10,  // x
   10, // y
   10 // z
 );
+
+
+// Light
+const pointLight2 = new THREE.PointLight(
+  // light blue #48899c
+  0x448519c
+  ,  // color
+  300,       // intensity
+  50     // distance
+); 
+pointLight2.position.set(
+  -10,  // x
+  -10, // y
+  -1 // z
+);
+
 scene.add(pointLight);
+scene.add(pointLight2);
+
 
 
 // Renderer
@@ -72,6 +91,7 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setSize(sizes.width, sizes.height);
 renderer.render(scene, camera);
+renderer.setPixelRatio(2);
 
 // Orbit Controls
 const controls = new OrbitControls(camera, canvas);
